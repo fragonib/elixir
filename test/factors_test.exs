@@ -1,7 +1,7 @@
 defmodule SequenceTest do
   use ExUnit.Case
-  doctest Sequence.PrimeFactors
-  alias Sequence.PrimeFactors, as: PrimeFactors
+  doctest Otp.PrimeFactors
+  alias Otp.PrimeFactors, as: PrimeFactors
 
   test "calculate prime factors" do
     assert PrimeFactors.factors(10) == [2,5]

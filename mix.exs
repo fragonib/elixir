@@ -1,4 +1,4 @@
-defmodule Sequence.MixProject do
+defmodule Otp.MixProject do
   use Mix.Project
 
   def project do

@@ -1,6 +1,5 @@
-defmodule Sequence.Server do
+defmodule Otp.Sequence do
   use GenServer
-  import Sequence.PrimeFactors
 
   def init(initial_number) do
     {:ok, initial_number}
@@ -19,6 +18,6 @@ defmodule Sequence.Server do
   end
 
   def handle_call({:factors, number}, _, _) do
-    {:reply, {:factors_of, number, Sequence.PrimeFactors.factors(number)}, []}
+    {:reply, {:factors_of, number, Otp.PrimeFactors.factors(number)}, []}
   end
 end

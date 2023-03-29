@@ -1,4 +1,4 @@
-defmodule Sequence.PrimeFactors do
+defmodule Otp.PrimeFactors do
   def factors(num) do
     factors(num, 2, [])
       |> Enum.reverse()
