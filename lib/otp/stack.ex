@@ -21,9 +21,12 @@ defmodule Otp.Stack do
     {:reply, response, next_state}
   end
 
-  def handle_call({:push, new_element}, _requester_pid, current_state) do
-    response = new_element
+  def handle_cast({:push, new_element}, current_state) do
     next_state = [new_element | current_state]
-    {:reply, response, next_state}
+    {:noreply, next_state}
   end
 end
+
+# > {:ok,pid} = GenServer.start_link(Otp.Stack, [5,"cat",9], [debug: [:trace, :statistics]])
+# > GenServer.call(pid, :pop)
+# > GenServer.cast(pid, {:push, "Dog"})
