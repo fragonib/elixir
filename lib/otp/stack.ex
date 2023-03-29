@@ -1,23 +1,29 @@
 defmodule Otp.Stack do
   use GenServer
 
-  def init(initial_number) do
-    {:ok, initial_number}
+  def init(initial_elements) do
+    {:ok, initial_elements}
   end
 
-  def handle_call(:next_number, _requester_pid, current_state) do
-    response = current_state
-    next_state = current_state + 1
+  def handle_call(:pop, _requester_pid, current_state) do
+    response =
+      case current_state do
+        [] -> {:empty}
+        [x | _] -> {:ok, x}
+      end
+
+    next_state =
+      case current_state do
+        [] -> []
+        [_ | xs] -> xs
+      end
+
     {:reply, response, next_state}
   end
 
-  def handle_call({:set_number, new_number}, _requester_pid, _current_state) do
-    response = new_number
-    next_state = new_number
+  def handle_call({:push, new_element}, _requester_pid, current_state) do
+    response = new_element
+    next_state = [new_element | current_state]
     {:reply, response, next_state}
-  end
-
-  def handle_call({:factors, number}, _, _) do
-    {:reply, {:factors_of, number, Otp.PrimeFactors.factors(number)}, []}
   end
 end
