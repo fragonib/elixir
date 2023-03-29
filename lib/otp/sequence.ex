@@ -20,4 +20,9 @@ defmodule Otp.Sequence do
   def handle_call({:factors, number}, _, _) do
     {:reply, {:factors_of, number, Otp.PrimeFactors.factors(number)}, []}
   end
+
+  def handle_cast({:increment_number, delta}, current_number) do
+    next_state = current_number + delta
+    {:noreply, next_state}
+  end
 end
