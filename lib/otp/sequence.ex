@@ -25,4 +25,15 @@ defmodule Otp.Sequence do
     next_state = current_number + delta
     {:noreply, next_state}
   end
+
+  def format_status(_reason, [_pdict, state]) do
+    [data: [{'State', "My current state is '#{inspect(state)}', and I'm happy"}]]
+  end
 end
+
+# > {:ok,pid} = GenServer.start_link(Otp.Sequence, 100, [debug: [:trace, :statistics]])
+# > GenServer.cast(pid, { :increment_number, 5} )
+# > GenServer.call(pid, :next_number)
+# > GenServer.call(pid, :next_number)
+# > :sys.statistics pid, :get
+# > :sys.get_status pid
