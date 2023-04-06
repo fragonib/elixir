@@ -4,6 +4,7 @@ defmodule SequenceTest do
   alias Otp.PrimeFactors, as: PrimeFactors
 
   test "calculate prime factors" do
+    assert PrimeFactors.factors(1) == []
     assert PrimeFactors.factors(10) == [2,5]
   end
 end
