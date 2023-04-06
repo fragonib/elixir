@@ -14,6 +14,10 @@ defmodule Stack.Server do
     {:reply, {:ok, S.top(stack)}, stack}
   end
 
+  def handle_call(:print, _requester_pid, stack) do
+    {:reply, {:ok, inspect(stack)}, stack}
+  end
+
   def handle_cast({:push, new_element}, stack) do
     {:noreply, S.push(new_element, stack)}
   end
@@ -23,6 +27,6 @@ defmodule Stack.Server do
   end
 
   def terminate(reason, state) do
-    IO.puts(:stdio, "Reason: '#{reason}', State: '#{state}'")
+    IO.puts(:stdio, "Reason: '#{reason}', State: '#{inspect(state)}'")
   end
 end
