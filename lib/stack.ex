@@ -2,12 +2,12 @@ defmodule Stack do
   @server Stack.Server
   alias Stack.Impl, as: S
 
-  def start_link() do
+  def start() do
     GenServer.start_link(@server, S.empty(), name: @server)
   end
 
-  def start_link(elements) do
-    GenServer.start_link(@server, S.create(elements), name: @server)
+  def start(stack_elements) do
+    GenServer.start_link(@server, S.create(stack_elements), name: @server)
   end
 
   def pop do
@@ -20,5 +20,9 @@ defmodule Stack do
 
   def push(new_element) do
     GenServer.cast(@server, {:push, new_element})
+  end
+
+  def stop() do
+    GenServer.cast(@server, :finish)
   end
 end
