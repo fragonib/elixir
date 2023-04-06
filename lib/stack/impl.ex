@@ -11,4 +11,8 @@ defmodule Stack.Impl do
 
   def push(new_element, stack), do: [new_element | stack]
 
+  def repr(stack), do: "Stack: [#{Enum.join(stack, ", ")}]"
+
+  def print(stack), do: IO.puts(Stack.Impl.repr(stack))
+
 end
