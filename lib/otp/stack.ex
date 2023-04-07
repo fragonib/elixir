@@ -8,7 +8,8 @@ defmodule Otp.Stack do
   def handle_call(:pop, _requester_pid, []) do
     {:reply, :empty, []}
   end
-  def handle_call(:pop, _requester_pid, [x|xs]) do
+
+  def handle_call(:pop, _requester_pid, [x | xs]) do
     {:reply, {:ok, x}, xs}
   end
 

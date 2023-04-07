@@ -1,5 +1,4 @@
 defmodule Stack.Impl do
-
   def create(elements), do: elements
   def empty(), do: []
 
@@ -10,5 +9,4 @@ defmodule Stack.Impl do
   def top([x | _xs]), do: x
 
   def push(new_element, stack), do: [new_element | stack]
-
 end

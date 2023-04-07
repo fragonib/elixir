@@ -1,7 +1,7 @@
 defmodule Otp.PrimeFactors do
   def factors(num) do
     factors(num, 2, [])
-      |> Enum.reverse()
+    |> Enum.reverse()
   end
 
   defp factors(1, _, acc) do
