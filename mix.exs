@@ -1,4 +1,4 @@
-defmodule Otp.MixProject do
+defmodule Concurrency.MixProject do
   use Mix.Project
 
   def project do

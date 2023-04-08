@@ -4,7 +4,7 @@ defmodule Stack.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Stack.Server, Stack.empty()}
+      {Stack.Server, Stack.Impl.empty()}
     ]
 
     opts = [strategy: :one_for_one, name: Sequence.Supervisor]
