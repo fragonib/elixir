@@ -1,4 +1,4 @@
-defmodule Sequence.Application do
+defmodule Stack.Application do
   use Application
 
   @impl true
