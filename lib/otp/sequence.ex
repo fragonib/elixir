@@ -5,13 +5,11 @@ defmodule Otp.Sequence do
     GenServer.start_link(__MODULE__, current_number, name: __MODULE__)
   end
 
-  def next_number do
-    GenServer.call(__MODULE__, :next_number)
-  end
-
-  def increment_number(delta) do
-    GenServer.cast(__MODULE__, {:increment_number, delta})
-  end
+  def current_number, do: GenServer.call(__MODULE__, :current_number)
+  def next_number, do: GenServer.call(__MODULE__, :next_number)
+  def prime_factors, do: GenServer.call(__MODULE__, :prime_factors)
+  def increment_number(delta), do: GenServer.cast(__MODULE__, {:increment_number, delta})
+  def set_number(new_number), do: GenServer.cast(__MODULE__, {:set_number, new_number})
 
   #####
   # GenServer implementation
@@ -20,33 +18,32 @@ defmodule Otp.Sequence do
     {:ok, initial_number}
   end
 
-  def handle_call(:echo, requester_pid, current_state) do
-    {:reply, requester_pid, current_state}
+  def handle_call(:current_number, _requester_pid, current_state) do
+    {:reply, current_state, current_state}
   end
 
   def handle_call(:next_number, _requester_pid, current_state) do
-    response = current_state
     next_state = current_state + 1
-    {:reply, response, next_state}
+    {:reply, current_state, next_state}
   end
 
-  def handle_call({:set_number, new_number}, _requester_pid, _current_state) do
-    response = new_number
-    next_state = new_number
-    {:reply, response, next_state}
-  end
-
-  def handle_call({:factors, number}, _, _) do
-    {:reply, {:factors_of, number, Otp.PrimeFactors.factors(number)}, []}
+  def handle_call(:prime_factors, _requester_pid, current_state) do
+    {:reply, {:prime_factors, current_state, Otp.PrimeFactors.factors(current_state)}, current_state}
   end
 
   def handle_call(any, _requester_pid, current_state) do
-    {:reply, "Not found atom: #{any}", current_state}
+    {:reply, "Not handler found for #{any}", current_state}
   end
 
   def handle_cast({:increment_number, delta}, current_state) do
     next_state = current_state + delta
-    {:noreply, next_state, 5000}
+    {:noreply, next_state}
+  end
+
+  @spec handle_cast({:set_number, any}, any, any) :: {:noreply, any}
+  def handle_cast({:set_number, new_number}, _requester_pid, _current_state) do
+    next_state = new_number
+    {:noreply, next_state}
   end
 
   def format_status(_reason, [_pdict, state]) do
@@ -54,7 +51,8 @@ defmodule Otp.Sequence do
   end
 
   def handle_info(_info, _state) do
-    {:noreply, 1_000_000}
+    next_state = 1_000_000
+    {:noreply, next_state}
   end
 end
 
