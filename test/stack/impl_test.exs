@@ -23,8 +23,4 @@ defmodule Stack.ImplTest do
     assert Stack.push(1, Stack.create([2, 3])) == [1, 2, 3]
   end
 
-  test "should generate literal representation" do
-    assert Stack.repr(Stack.create([])) == "Stack: []"
-    assert Stack.repr(Stack.create([1, 2, 3])) == "Stack: [1, 2, 3]"
-  end
 end

@@ -3,7 +3,7 @@ defmodule Concurrency.MixProject do
 
   def project do
     [
-      app: :sequence,
+      app: :concurrency,
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Concurrency.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Sequence.Application, []}
+      mod: {Stack.Application, []}
     ]
   end
 
