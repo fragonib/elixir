@@ -1,6 +1,11 @@
 defmodule Stack.Server do
+  @server Stack.Server
   use GenServer
   alias Stack.Impl, as: S
+
+  def start_link(initial_stack) do
+    GenServer.start_link(@server, initial_stack, name: @server)
+  end
 
   def init(initial_stack) do
     {:ok, initial_stack}
@@ -19,6 +24,9 @@ defmodule Stack.Server do
   end
 
   def handle_cast({:push, new_element}, stack) do
+    if new_element > 10 do
+      raise "oops"
+    end
     {:noreply, S.push(new_element, stack)}
   end
 
@@ -27,6 +35,6 @@ defmodule Stack.Server do
   end
 
   def terminate(reason, state) do
-    IO.puts(:stdio, "Reason: '#{reason}', State: '#{inspect(state)}'")
+    IO.puts(:stdio, "Reason: '#{inspect(reason)}', State: '#{inspect(state)}'")
   end
 end
