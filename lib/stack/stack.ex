@@ -1,14 +1,5 @@
 defmodule Stack do
   @server Stack.Server
-  alias Stack.Impl, as: S
-
-  def start_link() do
-    GenServer.start_link(@server, S.empty(), name: @server)
-  end
-
-  def start_link(stack_elements) do
-    GenServer.start_link(@server, S.create(stack_elements), name: @server)
-  end
 
   def pop do
     GenServer.call(@server, :pop)

@@ -3,12 +3,12 @@ defmodule Stack.Server do
   use GenServer
   alias Stack.Impl, as: S
 
-  def start_link(initial_stack) do
-    GenServer.start_link(@server, initial_stack, name: @server)
+  def start_link(_) do
+    GenServer.start_link(@server, nil, name: @server)
   end
 
-  def init(initial_stack) do
-    {:ok, initial_stack}
+  def init(_) do
+    {:ok, Stash.get()}
   end
 
   def handle_call(:pop, _requester_pid, stack) do
@@ -34,7 +34,8 @@ defmodule Stack.Server do
     {:stop, 'Request termination', stack}
   end
 
-  def terminate(reason, state) do
-    IO.puts(:stdio, "Reason: '#{inspect(reason)}', State: '#{inspect(state)}'")
+  def terminate(reason, current_state) do
+    IO.puts(:stdio, "Reason: '#{inspect(reason)}', State: '#{inspect(current_state)}'")
+    Stash.update(current_state)
   end
 end
