@@ -14,8 +14,10 @@ defmodule Concurrency.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Stack.Application, []}
+      mod: {Stack.Application, []},
+      env: [initial_stack: Stack.Impl.create([5, 2, 3])],
+      registered: [Sequence.Server],
+      extra_applications: [:logger]
     ]
   end
 

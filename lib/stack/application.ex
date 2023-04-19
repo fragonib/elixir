@@ -4,10 +4,10 @@ defmodule Stack.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Stash, Stack.Impl.create([1, 2, 3])},
+      {Stash, Application.get_env(:concurrency, :initial_stack)},
       {Stack.Server, nil},
     ]
-    opts = [strategy: :one_for_one, name: Sequence.Supervisor]
+    opts = [strategy: :one_for_one, name: Stack.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
