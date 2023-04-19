@@ -25,7 +25,7 @@ defmodule Sequence.Server do
   # GenServer implementation
 
   def init(_) do
-    {:ok, Sequence.Stash.get()}
+    {:ok, Stash.get()}
   end
 
   def handle_call(:echo, requester_pid, current_state) do
@@ -48,7 +48,7 @@ defmodule Sequence.Server do
   end
 
   def terminate(_reason, current_number) do
-    Sequence.Stash.update(current_number)
+    Stash.update(current_number)
   end
 
   def format_status(_reason, [_pdict, state]) do
